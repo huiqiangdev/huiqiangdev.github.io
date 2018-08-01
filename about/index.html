@@ -82,7 +82,7 @@
 <meta name="description" content="一路火花带闪电">
 <meta property="og:type" content="website">
 <meta property="og:title" content="不知道写什么的">
-<meta property="og:url" content="http://yoursite.com/about/index.html">
+<meta property="og:url" content="http://huiqiang.club/about/index.html">
 <meta property="og:site_name" content="小火花带闪电">
 <meta property="og:description" content="一路火花带闪电">
 <meta property="og:locale" content="zh-Hans">
@@ -108,18 +108,18 @@
       author: '博主'
     },
     algolia: {
-      applicationID: '',
-      apiKey: '',
-      indexName: '',
+      applicationID: 'WD7D621CSR',
+      apiKey: '1461c3f7ef4db938e3c3c8b8907d9e9d',
+      indexName: 'lightning',
       hits: {"per_page":10},
-      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"小火花熄灭了都找不到: ${query}","hits_stats":"小火花在 ${time} ms 内找到了 ${hits} 条结果"}
     }
   };
 </script>
 
 
 
-  <link rel="canonical" href="http://yoursite.com/about/"/>
+  <link rel="canonical" href="http://huiqiang.club/about/"/>
 
 
 
@@ -231,9 +231,47 @@
       
 
       
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
     </ul>
   
 
+  
+    <div class="site-search">
+      
+  
+  <div class="algolia-popup popup search-popup">
+    <div class="algolia-search">
+      <div class="algolia-search-input-icon">
+        <i class="fa fa-search"></i>
+      </div>
+      <div class="algolia-search-input" id="algolia-search-input"></div>
+    </div>
+
+    <div class="algolia-results">
+      <div id="algolia-stats"></div>
+      <div id="algolia-hits"></div>
+      <div id="algolia-pagination" class="algolia-pagination"></div>
+    </div>
+
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+  </div>
+
+
+
+
+    </div>
   
 </nav>
 
@@ -554,6 +592,19 @@
   
 
 
+
+
+  
+  
+  
+  <link rel="stylesheet" href="/lib/algolia-instant-search/instantsearch.min.css">
+
+  
+  
+  <script src="/lib/algolia-instant-search/instantsearch.min.js"></script>
+  
+
+  <script src="/js/src/algolia-search.js?v=5.1.4"></script>
 
 
 
