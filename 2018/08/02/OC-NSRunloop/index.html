@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="Hexo, NexT" />
+  <meta name="keywords" content="OC,NSRunloop," />
 
 
 
@@ -79,16 +79,18 @@
 
 
 
-<meta name="description" content="一路火花带闪电">
-<meta property="og:type" content="website">
-<meta property="og:title" content="小火花带闪电">
-<meta property="og:url" content="http://huiqiang.club/index.html">
+<meta name="description" content="NSRunloop含义：一个运行循环机制,系统运行的时候会开启一个Runloop如下所示 12345678910int main(int argc, char * argv[]) &amp;#123;    @autoreleasepool &amp;#123;        NSLog(@&quot;来这里了%@&quot;,[NSThread currentThread]);        // 进入了一个循环        i">
+<meta name="keywords" content="OC,NSRunloop">
+<meta property="og:type" content="article">
+<meta property="og:title" content="OC-NSRunloop">
+<meta property="og:url" content="http://huiqiang.club/2018/08/02/OC-NSRunloop/index.html">
 <meta property="og:site_name" content="小火花带闪电">
-<meta property="og:description" content="一路火花带闪电">
+<meta property="og:description" content="NSRunloop含义：一个运行循环机制,系统运行的时候会开启一个Runloop如下所示 12345678910int main(int argc, char * argv[]) &amp;#123;    @autoreleasepool &amp;#123;        NSLog(@&quot;来这里了%@&quot;,[NSThread currentThread]);        // 进入了一个循环        i">
 <meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2018-08-02T09:45:53.786Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="小火花带闪电">
-<meta name="twitter:description" content="一路火花带闪电">
+<meta name="twitter:title" content="OC-NSRunloop">
+<meta name="twitter:description" content="NSRunloop含义：一个运行循环机制,系统运行的时候会开启一个Runloop如下所示 12345678910int main(int argc, char * argv[]) &amp;#123;    @autoreleasepool &amp;#123;        NSLog(@&quot;来这里了%@&quot;,[NSThread currentThread]);        // 进入了一个循环        i">
 
 
 
@@ -118,13 +120,13 @@
 
 
 
-  <link rel="canonical" href="http://huiqiang.club/"/>
+  <link rel="canonical" href="http://huiqiang.club/2018/08/02/OC-NSRunloop/"/>
 
 
 
 
 
-  <title>小火花带闪电</title>
+  <title>OC-NSRunloop | 小火花带闪电</title>
   
 
 
@@ -153,8 +155,7 @@
     
   
 
-  <div class="container sidebar-position-left 
-  page-home">
+  <div class="container sidebar-position-left page-post-detail">
     <div class="headband"></div>
 
     <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
@@ -295,9 +296,9 @@
         <div class="content-wrap">
           <div id="content" class="content">
             
-  <section id="posts" class="posts-expand">
+
+  <div id="posts" class="posts-expand">
     
-      
 
   
 
@@ -327,9 +328,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/08/02/OC-NSRunloop/" itemprop="url">OC-NSRunloop</a></h1>
+          <h1 class="post-title" itemprop="name headline">OC-NSRunloop</h1>
         
 
         <div class="post-meta">
@@ -441,17 +440,43 @@
       
 
       
-        
-          <h1 id="NSRunloop"><a href="#NSRunloop" class="headerlink" title="NSRunloop"></a>NSRunloop</h1><p>含义：一个运行循环机制,系统运行的时候会开启一个Runloop如下所示</p>
+        <h1 id="NSRunloop"><a href="#NSRunloop" class="headerlink" title="NSRunloop"></a>NSRunloop</h1><p>含义：一个运行循环机制,系统运行的时候会开启一个Runloop如下所示</p>
 <figure class="highlight objc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> main(<span class="keyword">int</span> argc, <span class="keyword">char</span> * argv[]) &#123;</span><br><span class="line">    <span class="keyword">@autoreleasepool</span> &#123;</span><br><span class="line">        <span class="built_in">NSLog</span>(<span class="string">@"来这里了%@"</span>,[<span class="built_in">NSThread</span> currentThread]);</span><br><span class="line">        <span class="comment">// 进入了一个循环</span></span><br><span class="line">        <span class="keyword">int</span> a = <span class="built_in">UIApplicationMain</span>(argc, argv, <span class="literal">nil</span>, <span class="built_in">NSStringFromClass</span>([AppDelegate <span class="keyword">class</span>]));</span><br><span class="line">        <span class="comment">// 不过来</span></span><br><span class="line">        <span class="built_in">NSLog</span>(<span class="string">@"这里也来了"</span>);</span><br><span class="line">        <span class="keyword">return</span> a</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2018/08/02/OC-NSRunloop/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
+<a id="more"></a>
+<p>目的：</p>
+<ol>
+<li>保住当前线程的生命</li>
+<li>监听事件：触摸，时钟，网络等等。</li>
+</ol>
+<h2 id="mode"><a href="#mode" class="headerlink" title="mode"></a>mode</h2><pre><code>1. 每次运行RunLoop都必须指定其中一个mode，如果没有mode，RunLoop无法运行，而这个mode被称为当前mode。
+2. 如果要切换mode，只能退出当前RunLoop，然后再重新指定个mode进入。
+</code></pre><p>每个Mode又包含三个东西： Source/Timer/Observer.<br>Source:事件源(输入源)<br> 按照函数调用栈,Source分类<br> <strong>Source0</strong>:非Source1 就是.<br> <strong>Source1</strong>:系统内核事件!<br>Timer: 定时器<br>Observer: 观察者</p>
+<p>NSRunloop中有五种模式：</p>
+<ul>
+<li><code>NSDefaultRunLoopMode</code><br> <strong>默认模式</strong>,这个mode一般是主线程RunLoop的默认mode。创建线程之初RunLoop是以这种mode运行的。</li>
+<li><code>UITrackingRunLoopMode</code><br> <strong>UI模式</strong>,这个mode是保证滑动ScrollView滑动不受影响，比如滑动tableView的时候主线程就切到这个mode上了。<label style="color:red">UI模式的优先级高</label>所以定时器添加的时候注意，UI模式只会被UI事件触发。</li>
+<li><code>NSRunLoopCommonModes</code><br><strong>占位模式!!UI&amp;&amp;默认!</strong>,处理定时器遇到的问题</li>
+<li><code>UITInitializationRunLoopMode</code> <br>在刚启动App的时候第一次进入的mode，启动后就不进入此mode了，</li>
+<li><code>GSEventReceiveRunLoopMode</code> <br> 接受系统内部的mode，通常不用</li>
+</ul>
+<h2 id="线程和Runloop"><a href="#线程和Runloop" class="headerlink" title="线程和Runloop"></a>线程和Runloop</h2><p>在处理耗时的事件的时候，通常放到子线程。AFN2.0的时候就会有一个常驻线程，AFN3.0将常驻线程移除。具体原因可查看<a href="https://www.jianshu.com/p/b5c27669e2c1" target="_blank" rel="noopener">AFNetworking常驻线程问题</a></p>
+<figure class="highlight objc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">-(<span class="keyword">void</span>)test&#123;</span><br><span class="line">  <span class="built_in">NSThread</span> *thread = [[<span class="built_in">NSThread</span> alloc] initWithBlock:^&#123;</span><br><span class="line">         <span class="built_in">NSTimer</span> * timer = [<span class="built_in">NSTimer</span> timerWithTimeInterval:<span class="number">1.0</span> target:<span class="keyword">self</span> selector:<span class="keyword">@selector</span>(timerMethod) userInfo:<span class="literal">nil</span> repeats:<span class="literal">YES</span>];</span><br><span class="line">    [[<span class="built_in">NSRunLoop</span> currentRunLoop] addTimer:timer forMode:<span class="built_in">NSDefaultRunLoopMode</span>];</span><br><span class="line">    <span class="comment">// 死循环开启Runloop</span></span><br><span class="line">    <span class="keyword">while</span> (<span class="literal">true</span>) &#123;</span><br><span class="line">            [[<span class="built_in">NSRunLoop</span> currentRunLoop] runUntilDate:[<span class="built_in">NSDate</span> dateWithTimeIntervalSinceNow:<span class="number">0.0001</span>]];</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;];</span><br><span class="line">    [thread start];</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//耗时操作!!</span></span><br><span class="line">- (<span class="keyword">void</span>)timerMethod &#123;</span><br><span class="line">    [<span class="built_in">NSThread</span> sleepForTimeInterval:<span class="number">1.0</span>];<span class="comment">//模拟耗时操作!!</span></span><br><span class="line">    </span><br><span class="line">    <span class="built_in">NSLog</span>(<span class="string">@"%@--来了!!"</span>,[<span class="built_in">NSThread</span> currentThread]);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>上面代码就是以前处理线程死掉的方法。可以增加完成的标志来结束Runloop。当线程存活下来的时候，就可以进行线程之间的互相通信。</p>
+<figure class="highlight objc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">-(<span class="keyword">void</span>)test&#123;</span><br><span class="line">  <span class="built_in">NSThread</span> *thread = [[<span class="built_in">NSThread</span> alloc] initWithBlock:^&#123;</span><br><span class="line">         <span class="built_in">NSLog</span>(<span class="string">@"%@-----"</span>,[<span class="built_in">NSThread</span> currentThread]);</span><br><span class="line">    <span class="comment">// 死循环开启Runloop</span></span><br><span class="line">    <span class="keyword">while</span> (<span class="literal">true</span>) &#123;</span><br><span class="line">    <span class="comment">// 不加这段代码是无法进行线程通信的</span></span><br><span class="line">            [[<span class="built_in">NSRunLoop</span> currentRunLoop] runUntilDate:[<span class="built_in">NSDate</span> dateWithTimeIntervalSinceNow:<span class="number">0.0001</span>]];</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;];</span><br><span class="line">    [thread start];</span><br><span class="line">    <span class="comment">// 主线程与子线程之间的通信</span></span><br><span class="line">    [<span class="keyword">self</span> performSelector:<span class="keyword">@selector</span>(otherMethod) onThread:thread withObject:<span class="literal">nil</span> waitUntilDone:<span class="literal">NO</span>];</span><br><span class="line">&#125;</span><br><span class="line">- (<span class="keyword">void</span>)otherMethod &#123;</span><br><span class="line">    <span class="built_in">NSLog</span>(<span class="string">@"OtherMethod --- %@"</span>,[<span class="built_in">NSThread</span> currentThread]);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="Runloop运用（Observer）"><a href="#Runloop运用（Observer）" class="headerlink" title="Runloop运用（Observer）"></a>Runloop运用（Observer）</h2><p>手机上加载高清图会卡顿，渲染图片耗时。渲染图片只能在主线程，那么这个时候可以进行分段加载，因为每次Runloop循环（假设一屏最多18张大图）加载18张，所以卡住了。可以监听Runloop每次只渲染一张大图。<br>优化步骤</p>
+<ol>
+<li>监听Runloop循环</li>
+<li>将加载大图的代码，放在数组里面</li>
+<li>每次Runloop循环，取出一个加载大图的任务执行</li>
+</ol>
+<p>监听使用<strong>CFRunloop</strong>，在CFRunloop中有CFRunLoopObserverRef监听这个就可以。</p>
+<blockquote>
+<p>/<em> Run Loop Observer Activities </em>/<br>typedef CF_OPTIONS(CFOptionFlags, CFRunLoopActivity) {<br>    kCFRunLoopEntry = (1UL &lt;&lt; 0),<br>    kCFRunLoopBeforeTimers = (1UL &lt;&lt; 1),<br>    kCFRunLoopBeforeSources = (1UL &lt;&lt; 2),<br>    kCFRunLoopBeforeWaiting = (1UL &lt;&lt; 5),<br>    kCFRunLoopAfterWaiting = (1UL &lt;&lt; 6),<br>    kCFRunLoopExit = (1UL &lt;&lt; 7),<br>    kCFRunLoopAllActivities = 0x0FFFFFFFU<br>};</p>
+</blockquote>
+<p>处理任何事件都会进入kCFRunLoopBeforeWaiting，所以直接监听这个就可以，在C语言中通过函数指针来进行回调。<br>关键代码如下：</p>
+<figure class="highlight objc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line">-(<span class="keyword">void</span>)addRunloopObserver&#123;</span><br><span class="line">    <span class="comment">//获取Runloop</span></span><br><span class="line">     <span class="built_in">CFRunLoopRef</span> runloop = <span class="built_in">CFRunLoopGetCurrent</span>();</span><br><span class="line">    <span class="comment">//定义一个context</span></span><br><span class="line">    <span class="built_in">CFRunLoopObserverContext</span> context = &#123;</span><br><span class="line">        <span class="number">0</span>,</span><br><span class="line">        (__bridge <span class="keyword">void</span> *)(<span class="keyword">self</span>),</span><br><span class="line">        &amp;<span class="built_in">CFRetain</span>,</span><br><span class="line">        &amp;<span class="built_in">CFRelease</span>,</span><br><span class="line">        <span class="literal">NULL</span></span><br><span class="line">    &#125;;</span><br><span class="line">    </span><br><span class="line">    <span class="comment">//定义观察者</span></span><br><span class="line">    <span class="keyword">static</span> <span class="built_in">CFRunLoopObserverRef</span> runloopObserver;</span><br><span class="line">    runloopObserver = <span class="built_in">CFRunLoopObserverCreate</span>(<span class="literal">NULL</span>, kCFRunLoopBeforeWaiting, <span class="literal">YES</span>, <span class="number">0</span>, &amp;callBack, &amp;context);</span><br><span class="line">    </span><br><span class="line">    <span class="comment">//添加观察者</span></span><br><span class="line">    <span class="built_in">CFRunLoopAddObserver</span>(runloop, runloopObserver, kCFRunLoopCommonModes);</span><br><span class="line"></span><br><span class="line">    <span class="comment">//C里面 一旦creat new copy</span></span><br><span class="line">    <span class="built_in">CFRelease</span>(runloopObserver);</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//直接进入头文件拷贝typedef void (*CFRunLoopObserverCallBack)(CFRunLoopObserverRef observer, CFRunLoopActivity activity, void *info);</span></span><br><span class="line"><span class="keyword">void</span> callBack(<span class="built_in">CFRunLoopObserverRef</span> observer, <span class="built_in">CFRunLoopActivity</span> activity, <span class="keyword">void</span> *info)&#123;</span><br><span class="line">    ViewController * vc = (__bridge ViewController *)info;</span><br><span class="line">    <span class="keyword">if</span>(vc.tasks.count == <span class="number">0</span>)&#123;</span><br><span class="line">        <span class="keyword">return</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    runloopBlock block = vc.tasks.firstObject;</span><br><span class="line">    block();</span><br><span class="line">    [vc.tasks removeObjectAtIndex:<span class="number">0</span>];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这样就不会卡顿了，具体的代码查看<a href="https://github.com/huiqiangdev/MyBlog/tree/master/LoadHighQualityImage" target="_blank" rel="noopener">Github</a></p>
+
       
     </div>
     
@@ -466,14 +491,22 @@
 
     <footer class="post-footer">
       
+        <div class="post-tags">
+          
+            <a href="/tags/OC/" rel="tag"># OC</a>
+          
+            <a href="/tags/NSRunloop/" rel="tag"># NSRunloop</a>
+          
+        </div>
+      
+
+      
+      
+      
 
       
 
       
-
-      
-      
-        <div class="post-eof"></div>
       
     </footer>
   </div>
@@ -483,10 +516,11 @@
   </article>
 
 
-    
-  </section>
 
-  
+    <div class="post-spread">
+      
+    </div>
+  </div>
 
 
           </div>
@@ -494,6 +528,13 @@
 
 
           
+
+  
+    <div class="comments" id="comments">
+    </div>
+  
+
+
 
         </div>
         
@@ -514,8 +555,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <section class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -595,6 +645,22 @@
         </div>
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#NSRunloop"><span class="nav-number">1.</span> <span class="nav-text">NSRunloop</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#mode"><span class="nav-number">1.1.</span> <span class="nav-text">mode</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#线程和Runloop"><span class="nav-number">1.2.</span> <span class="nav-text">线程和Runloop</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Runloop运用（Observer）"><span class="nav-number">1.3.</span> <span class="nav-text">Runloop运用（Observer）</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       
@@ -729,6 +795,10 @@
   
 
   
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
 
   
 
